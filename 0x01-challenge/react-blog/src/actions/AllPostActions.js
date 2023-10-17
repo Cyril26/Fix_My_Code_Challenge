@@ -8,14 +8,14 @@ class AllPostActions {
         var AllPostStore = require('../stores/AllPostStore');
         var state = AllPostStore.getState();
         if(!!state.postsByPage[pageNum]) {
-            this.actions.updatePsots(state.postsByPage[pageNum], pageNum);
+            this.actions.updatePosts(state.postsByPage[pageNum], pageNum);
         } else {
             var self = this;
 
             pageNum = pageNum -1;
 
             var end = (pageNum * config.itemsPerPage) + config.itemsPerPage;
-            var start = ((pageNum % 2) * config.itemsPerPage);
+            var start = (pageNum  * config.itemsPerPage);
 
             if(typeof NProgress != 'undefined') {
                 NProgress.start();
@@ -43,7 +43,7 @@ class AllPostActions {
             (!!state.postListContent.header && state.postListContent.header != '')) {
             return;
         }
-        reqeust.get(config.baseUrl+'/ajax/postListContent',function(err,response){
+        request.get(config.baseUrl+'/ajax/postListContent',function(err,response){
             self.actions.updatePostListContent(response.body);
         });
     }
